@@ -1,6 +1,9 @@
 import { FC, Fragment } from "react";
 import { BigText } from "./BigText";
 import { TitleText } from "./TitleText";
+import { Parent } from "./Parent";
+import Todos from "./Todos";
+import { Counter } from "./Counter";
 
 const name = "Hello World New World";
 
@@ -21,8 +24,12 @@ const HelloWorld: FC = () => {
       {element}
       {ele2}
       <div>{sayName()}</div>
-      <BigText text="my-text" />
+      <Parent>
+        <BigText text="my-text" />
+      </Parent>
       <TitleText value="My Title Text" age={10} />
+      <Todos todos={["1", "2", "3"]} />
+      <Counter />
     </Fragment>
   );
 };

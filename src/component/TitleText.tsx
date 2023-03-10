@@ -1,4 +1,4 @@
-import { Component, ReactNode, Fragment } from "react";
+import { Component, ReactNode, Fragment, ChangeEvent } from "react";
 
 type MyProps = {
   value: string;
@@ -16,7 +16,18 @@ export class TitleText extends Component<MyProps, MyState> {
     this.state = { cnt: this.props.age, name: "" };
   }
 
-  addCounter() {}
+  addCounter() {
+    console.log("counter add work");
+    this.setState((state) => ({
+      cnt: state.cnt + 1,
+    }));
+  }
+
+  setName(e: ChangeEvent<HTMLInputElement>) {
+    this.setState((state) => ({
+      name: e.target.value,
+    }));
+  }
 
   render(): ReactNode {
     return (
@@ -25,6 +36,8 @@ export class TitleText extends Component<MyProps, MyState> {
         <div>{this.state.cnt}</div>
         <div>{this.state.name}</div>
         <button onClick={(e) => this.addCounter()}>Add</button>
+        <button onClick={this.addCounter.bind(this)}>Add 2</button>
+        <input onChange={(e) => this.setName(e)} />
       </Fragment>
     );
   }
