@@ -4,6 +4,7 @@ import { TitleText } from "./TitleText";
 import { Parent } from "./Parent";
 import Todos from "./Todos";
 import { Counter } from "./Counter";
+import { ConfirmValue } from "./ConfirmValue";
 
 const name = "Hello World New World";
 
@@ -21,15 +22,7 @@ const ele2 = <div>{name}</div>;
 const HelloWorld: FC = () => {
   return (
     <Fragment>
-      {element}
-      {ele2}
-      <div>{sayName()}</div>
-      <Parent>
-        <BigText text="my-text" />
-      </Parent>
-      <TitleText value="My Title Text" age={10} />
-      <Todos todos={["1", "2", "3"]} />
-      <Counter />
+      <ConfirmValue />
     </Fragment>
   );
 };
