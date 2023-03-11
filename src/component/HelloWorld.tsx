@@ -6,6 +6,8 @@ import Todos from "./Todos";
 import { Counter } from "./Counter";
 import { ConfirmValue } from "./ConfirmValue";
 import { AddTodo } from "./AddTodo";
+import { CounterDisplay } from "./CounterDisplay";
+import { CounterButton } from "./CounterButton";
 
 const name = "Hello World New World";
 
@@ -23,7 +25,8 @@ const ele2 = <div>{name}</div>;
 const HelloWorld: FC = () => {
   return (
     <Fragment>
-      <AddTodo />
+      <CounterDisplay />
+      <CounterButton />
     </Fragment>
   );
 };
