@@ -14,6 +14,9 @@ const reducer = (state: TodoModel[], action: TodoAction) => {
   console.log(action.type, action.payload);
   if (action.type === "ADD") {
     return [...state, { name: action.payload }];
+  } else if (action.type === "DEL") {
+    const filState = state.filter((value) => value.name !== action.payload);
+    return filState;
   } else {
     return state;
   }
@@ -30,6 +33,9 @@ const AddTodo: FC = () => {
       console.log("invalid value");
     }
   };
+  const delBtn = (s: string) => {
+    dispatch({ type: "DEL", payload: s });
+  };
   return (
     <>
       <input ref={inputEle} />
@@ -37,7 +43,7 @@ const AddTodo: FC = () => {
       <ul>
         {todos.map((model, index) => (
           <li key={index}>
-            {model.name} <button>del</button>
+            {model.name} <button onClick={() => delBtn(model.name)}>del</button>
           </li>
         ))}
       </ul>
