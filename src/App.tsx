@@ -1,5 +1,4 @@
 import "./App.css";
-import HelloWorld from "./component/HelloWorld";
 import { Panel } from "./component/Panel";
 
 function App() {
