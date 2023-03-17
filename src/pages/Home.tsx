@@ -3,6 +3,8 @@ import { FC, useState, useEffect } from "react"
 import "./Home.css"
 // Import module style
 import style from "../style/my-style.module.css" // <- recommend
+// Import Button, StackLayout from aui
+import { Button, StackLayout } from "../component/aui"
 
 interface GeoModel {
 	lat: string
@@ -54,7 +56,12 @@ const Home: FC = () => {
 	}
 	return (
 		<>
-			<button onClick={loadData}>Load</button>
+			<button
+				onClick={loadData}
+				className="bg-red-200 py-1 px-2 rounded hover:bg-red-400 hover:text-white"
+			>
+				Load
+			</button>
 			{/* Inline style */}
 			<h1 style={{ color: "red" }}>Inline style</h1>
 			<h1 style={style_json}>Inline style with json variable</h1>
@@ -62,10 +69,24 @@ const Home: FC = () => {
 			<p>Lorem, ipsum dolor.</p>
 
 			<h2 className={style.textPurple}>My style with module.css</h2>
+			<h3 className="text-red-400">Use color from tailwindcss</h3>
+
+			<div className="mb-5">
+				<h1 className="text-2xl">Responsive</h1>
+				<div className="sm:bg-green-400 md:bg-purple-400 lg:bg-red-400 bg-yellow-200 p-4 text-center">
+					Test area
+				</div>
+				<button className="btn-primary">
+					.btn-primary from @layer component
+				</button>
+			</div>
+
+			<Button label="btn from components" onClick={loadData} />
+
 			<table>
 				<thead>
-					{headers.map((value) => (
-						<th>{value}</th>
+					{headers.map((value, index) => (
+						<th key={index}>{value}</th>
 					))}
 				</thead>
 				<tbody>
