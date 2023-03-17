@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
-import { Outlet } from "react-router-dom"
+import { Outlet, Link } from "react-router-dom"
 
 const user = {
 	name: "Tom Cook",
@@ -52,9 +52,9 @@ const StackLayout: FC = () => {
 										<div className="hidden md:block">
 											<div className="ml-10 flex items-baseline space-x-4">
 												{navigation.map((item) => (
-													<a
+													<Link
 														key={item.name}
-														href={item.href}
+														to={item.href}
 														className={classNames(
 															item.current
 																? "bg-gray-900 text-white"
@@ -64,7 +64,7 @@ const StackLayout: FC = () => {
 														aria-current={item.current ? "page" : undefined}
 													>
 														{item.name}
-													</a>
+													</Link>
 												))}
 											</div>
 										</div>
