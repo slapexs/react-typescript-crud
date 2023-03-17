@@ -1,16 +1,18 @@
-import { FC, Fragment, ReactNode } from "react";
-
+import { FC, Fragment, ReactNode } from "react"
+import { PanelTitle } from "./aui"
 interface Props {
-  children: ReactNode;
+	children: ReactNode
 }
 
 const Panel: FC<Props> = ({ children }) => {
-  return (
-    <Fragment>
-      <h1>Panel Text</h1>
-      {children}
-    </Fragment>
-  );
-};
+	return (
+		<Fragment>
+			<PanelTitle title="Root page">
+				<h1>Panel Text</h1>
+				{children}
+			</PanelTitle>
+		</Fragment>
+	)
+}
 
-export { Panel };
+export { Panel }

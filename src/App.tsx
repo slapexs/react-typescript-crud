@@ -1,12 +1,12 @@
-import "./App.css";
-import { Panel } from "./component/Panel";
+import "./App.css"
+import { Panel } from "./component/Panel"
 
 function App() {
-  return (
-    <Panel>
-      <div>App Screen</div>
-    </Panel>
-  );
+	return (
+		<Panel>
+			<div>App Screen</div>
+		</Panel>
+	)
 }
 
-export default App;
+export default App
