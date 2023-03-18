@@ -2,7 +2,7 @@ import { FC, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../app/store"
 import { Button, PanelTitle } from "../component/aui"
-import { Navigate } from "react-router-dom"
+import { Navigate, NavLink } from "react-router-dom"
 
 interface UserModel {
 	id: number
@@ -41,6 +41,12 @@ const User: FC = () => {
 			{isLogedIn ? (
 				<PanelTitle title="Users">
 					<Button onClick={getusers} label="Load data" />
+					<NavLink
+						to="/adduser"
+						className="bg-emerald-100 hover:bg-emerald-300 hover:text-white py-3 px-4 mx-2 rounded-lg"
+					>
+						Add user
+					</NavLink>
 					{/* Table */}
 					<table className="w-full mt-3">
 						<thead className="bg-indigo-200">

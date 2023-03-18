@@ -9,6 +9,7 @@ import { Layout } from "./pages/Layout"
 import { StackLayout } from "./component/aui"
 import Login from "./pages/Login"
 import { User } from "./pages/User"
+import AddUser from "./pages/Adduser"
 
 const router = createBrowserRouter([
 	{
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
 			{
 				path: "user",
 				element: <User />,
+			},
+			{
+				path: "adduser",
+				element: <AddUser />,
 			},
 		],
 	},
