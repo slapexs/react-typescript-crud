@@ -1,5 +1,8 @@
 import { FC, useState } from "react"
+import { useSelector } from "react-redux"
+import { RootState } from "../app/store"
 import { Button, PanelTitle } from "../component/aui"
+import { Navigate } from "react-router-dom"
 
 interface UserModel {
 	id: number
@@ -14,7 +17,7 @@ interface UserResp {
 }
 
 interface ColProps {
-	values: number
+	values: string
 }
 
 const Col: FC<ColProps> = ({ values }) => {
@@ -23,9 +26,8 @@ const Col: FC<ColProps> = ({ values }) => {
 
 const User: FC = () => {
 	const [user, setUser] = useState<UserResp>({ success: false, data: [] })
+	const { isLogedIn, token } = useSelector((state: RootState) => state.auth)
 	const getusers = async () => {
-		const token =
-			"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsIm5hbWUiOiJhQGEuY29tIn0.eIdaMkVzp-KVr9B14A2frSrFBdI_bv6q95iKgTSRIao"
 		const res = await fetch("http://54.254.44.166:3000/user", {
 			headers: { Authorization: `Bearer ${token}` },
 		})
@@ -36,29 +38,33 @@ const User: FC = () => {
 
 	return (
 		<>
-			<PanelTitle title="Users">
-				<Button onClick={getusers} label="Load data" />
-				{/* Table */}
-				<table className="w-full mt-3">
-					<thead className="bg-indigo-200">
-						<th>ID</th>
-						<th>Code</th>
-						<th>Name</th>
-						<th>Email</th>
-					</thead>
+			{isLogedIn ? (
+				<PanelTitle title="Users">
+					<Button onClick={getusers} label="Load data" />
+					{/* Table */}
+					<table className="w-full mt-3">
+						<thead className="bg-indigo-200">
+							<th>ID</th>
+							<th>Code</th>
+							<th>Name</th>
+							<th>Email</th>
+						</thead>
 
-					<tbody>
-						{user.data.map((elem, index) => (
-							<tr key={index} className="bg-white py-3 hover:bg-indigo-100">
-								<Col values={elem.id} />
-								<td>{elem.code}</td>
-								<td>{elem.name}</td>
-								<td>{elem.email}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</PanelTitle>
+						<tbody>
+							{user.data.map((elem, index) => (
+								<tr key={index} className="bg-white py-3 hover:bg-indigo-50">
+									<Col values={elem.id.toString()} />
+									<Col values={elem.code} />
+									<Col values={elem.name} />
+									<Col values={elem.email} />
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</PanelTitle>
+			) : (
+				<Navigate to="/login" />
+			)}
 		</>
 	)
 }
