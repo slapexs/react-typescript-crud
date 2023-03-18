@@ -8,6 +8,7 @@ import { Layout } from "./pages/Layout"
 // import StackLayout from aui
 import { StackLayout } from "./component/aui"
 import Login from "./pages/Login"
+import { User } from "./pages/User"
 
 const router = createBrowserRouter([
 	{
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
 			{
 				path: "login",
 				element: <Login />,
+			},
+			{
+				path: "user",
+				element: <User />,
 			},
 		],
 	},

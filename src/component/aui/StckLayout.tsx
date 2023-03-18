@@ -18,6 +18,7 @@ const navigation = [
 	{ name: "Hello", href: "/hello/abc" },
 	{ name: "Home", href: "/home" },
 	{ name: "login", href: "/login" },
+	{ name: "User", href: "/user" },
 ]
 const userNavigation = [
 	{ name: "Root", href: "/" },
