@@ -7,6 +7,7 @@ import { Layout } from "./pages/Layout"
 
 // import StackLayout from aui
 import { StackLayout } from "./component/aui"
+import Login from "./pages/Login"
 
 const router = createBrowserRouter([
 	{
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
 			{
 				path: "home",
 				element: <Home />,
+			},
+			{
+				path: "login",
+				element: <Login />,
 			},
 		],
 	},

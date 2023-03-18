@@ -13,11 +13,13 @@ const navigation = [
 	{ name: "Root", href: "/" },
 	{ name: "Hello", href: "/hello/abc" },
 	{ name: "Home", href: "/home" },
+	{ name: "login", href: "/login" },
 ]
 const userNavigation = [
 	{ name: "Root", href: "/" },
 	{ name: "Hello", href: "/hello/abc" },
 	{ name: "Home", href: "/home" },
+	{ name: "login", href: "/login" },
 ]
 
 const classNames = (...classes: string[]) => {
@@ -63,7 +65,6 @@ const StackLayout: FC = () => {
 																"rounded-md px-3 py-2 text-sm font-medium"
 															)
 														}
-														aria-current={item.current ? "page" : undefined}
 													>
 														{item.name}
 													</NavLink>

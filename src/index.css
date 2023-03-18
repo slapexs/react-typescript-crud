@@ -5,6 +5,6 @@
 
 @layer components {
 	.btn-primary {
-		@apply bg-purple-200 text-purple-800 rounded py-1 px-2 hover:bg-purple-300 transition;
+		@apply bg-indigo-100 text-indigo-800 rounded-md py-2 px-3 hover:bg-indigo-300 hover:text-white transition;
 	}
 }
