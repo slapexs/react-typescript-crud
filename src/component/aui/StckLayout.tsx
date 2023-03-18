@@ -1,7 +1,11 @@
-import { FC, Fragment } from "react"
+import { FC, Fragment, useState } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import { Outlet, NavLink } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { RootState } from "../../app/store"
+import { useDispatch } from "react-redux"
+import { logout } from "../../app/slice/auth-slice"
 
 const user = {
 	name: "Tom Cook",
@@ -19,7 +23,6 @@ const userNavigation = [
 	{ name: "Root", href: "/" },
 	{ name: "Hello", href: "/hello/abc" },
 	{ name: "Home", href: "/home" },
-	{ name: "login", href: "/login" },
 ]
 
 const classNames = (...classes: string[]) => {
@@ -27,6 +30,8 @@ const classNames = (...classes: string[]) => {
 }
 
 const StackLayout: FC = () => {
+	const isLogedIn = useSelector((state: RootState) => state.auth.token)
+	const dispatch = useDispatch()
 	return (
 		<>
 			{/*
@@ -51,6 +56,7 @@ const StackLayout: FC = () => {
 												alt="Your Company"
 											/>
 										</div>
+
 										<div className="hidden md:block">
 											<div className="ml-10 flex items-baseline space-x-4">
 												{navigation.map((item) => (
@@ -72,7 +78,7 @@ const StackLayout: FC = () => {
 											</div>
 										</div>
 									</div>
-									<div className="hidden md:block">
+									<div className={isLogedIn ? "hidden md:block" : "hidden"}>
 										<div className="ml-4 flex items-center md:ml-6">
 											<button
 												type="button"
@@ -118,6 +124,14 @@ const StackLayout: FC = () => {
 																{item.name}
 															</NavLink>
 														))}
+														<Menu.Items>
+															<button
+																className="block w-full text-left px-4 py-2 text-sm text-gray-700"
+																onClick={() => dispatch(logout())}
+															>
+																Logout
+															</button>
+														</Menu.Items>
 													</Menu.Items>
 												</Transition>
 											</Menu>
