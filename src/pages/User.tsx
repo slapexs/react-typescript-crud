@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../app/store"
-import { Button, PanelTitle } from "../component/aui"
+import { Button, ConfirmDialog, PanelTitle } from "../component/aui"
 import { useNavigate, Navigate, NavLink } from "react-router-dom"
 
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
@@ -29,6 +29,8 @@ const Col: FC<ColProps> = ({ values }) => {
 const User: FC = () => {
 	const [user, setUser] = useState<UserResp>({ success: false, data: [] })
 	const { isLogedIn, token } = useSelector((state: RootState) => state.auth)
+	const [showConfirm, setShowConfirm] = useState(false)
+	const [confirmDelete, setconfirmDelete] = useState(false)
 	const navigate = useNavigate()
 
 	const getusers = async () => {
@@ -37,7 +39,6 @@ const User: FC = () => {
 		})
 		const data = await res.json()
 		setUser(data)
-		console.log(user)
 	}
 
 	const DeleteUser = async (uid: number) => {
@@ -104,7 +105,10 @@ const User: FC = () => {
 										<button
 											className="hover:bg-red-400 flex items-center text-red-500 my-2 hover:text-white border-2 border-red-300 rounded px-2 py-1"
 											onClick={() => {
-												DeleteUser(elem.id)
+												setShowConfirm(true)
+												if (confirmDelete) {
+													DeleteUser(elem.id)
+												}
 											}}
 										>
 											<TrashIcon width={14} />
@@ -118,6 +122,17 @@ const User: FC = () => {
 				</PanelTitle>
 			) : (
 				<Navigate to="/login" />
+			)}
+			{showConfirm && (
+				<ConfirmDialog
+					title="Alert !"
+					text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis vero, eaque libero aperiam quibusdam reprehenderit excepturi alias distinctio beatae dolore?"
+					cancel="Cancel"
+					confirm="Confirm"
+					onConfirm={() => {
+						setconfirmDelete(true)
+					}}
+				/>
 			)}
 		</>
 	)
