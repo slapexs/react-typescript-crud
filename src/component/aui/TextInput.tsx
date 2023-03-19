@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, memo } from "react"
 
 interface SettingInput {
 	id: string
@@ -9,6 +9,8 @@ interface SettingInput {
 }
 
 const TextInput: FC<SettingInput> = ({ id, type, label, value, setValue }) => {
+	console.log(id)
+
 	return (
 		<>
 			<div className="my-2">
@@ -29,3 +31,4 @@ const TextInput: FC<SettingInput> = ({ id, type, label, value, setValue }) => {
 }
 
 export { TextInput }
+export default memo(TextInput)

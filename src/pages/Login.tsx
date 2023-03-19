@@ -1,7 +1,9 @@
 import { FC, useState } from "react"
 import { PanelTitle } from "../component/aui"
 import { useDispatch } from "react-redux"
-import { Button, TextInput } from "../component/aui"
+import { Button } from "../component/aui"
+import TextInput from "../component/aui/TextInput"
+import { useNavigate } from "react-router-dom"
 
 import { loginSuccess } from "../app/slice/auth-slice"
 
@@ -9,6 +11,11 @@ const Login: FC = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
+	const toUser = () => {
+		navigate("/user")
+	}
 
 	const Login = async () => {
 		const url = "http://54.254.44.166:3000/login"
@@ -21,6 +28,11 @@ const Login: FC = () => {
 		const data = await res.json()
 		console.log(data)
 		dispatch(loginSuccess(data.token))
+		if (data.succes) {
+			toUser()
+		} else {
+			console.log(data.statusText)
+		}
 
 		// Promise (I don't want to use it.)
 		// fetch(url, {
