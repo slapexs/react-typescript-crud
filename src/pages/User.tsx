@@ -36,6 +36,21 @@ const User: FC = () => {
 		console.log(user)
 	}
 
+	const DeleteUser = async (uid: number) => {
+		const token =
+			"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsIm5hbWUiOiJhQGEuY29tIn0.eIdaMkVzp-KVr9B14A2frSrFBdI_bv6q95iKgTSRIao"
+
+		const url = "http://54.254.44.166:3000/user"
+		const res = await fetch(`${url}/${uid}`, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		})
+		alert("Deleted")
+		getusers()
+	}
+
 	return (
 		<>
 			{isLogedIn ? (
@@ -54,15 +69,26 @@ const User: FC = () => {
 							<th>Code</th>
 							<th>Name</th>
 							<th>Email</th>
+							<th>Action</th>
 						</thead>
 
 						<tbody>
 							{user.data.map((elem, index) => (
-								<tr key={index} className="bg-white py-3 hover:bg-indigo-50">
+								<tr key={index} className="bg-white hover:bg-indigo-50">
 									<Col values={elem.id.toString()} />
 									<Col values={elem.code} />
 									<Col values={elem.name} />
 									<Col values={elem.email} />
+									<td className="text-center">
+										<button
+											className="hover:bg-red-400 text-red-500 my-2 hover:text-white border-2 border-red-300 rounded px-2 py-1"
+											onClick={() => {
+												DeleteUser(elem.id)
+											}}
+										>
+											Delete
+										</button>
+									</td>
 								</tr>
 							))}
 						</tbody>

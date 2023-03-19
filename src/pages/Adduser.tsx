@@ -1,13 +1,13 @@
 import { FC, useState } from "react"
-import { NavLink } from "react-router-dom"
+import { Navigate, NavLink } from "react-router-dom"
 import { PanelTitle, Button, TextInput } from "../component/aui"
-import { useDispatch } from "react-redux"
+import { useNavigation } from "react-router-dom"
 
 const AddUser: FC = () => {
 	const [code, setCode] = useState("")
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
-	const dispatch = useDispatch()
+	const [addUser, setAddUser] = useState(false)
 
 	const SubmitAddUser = async () => {
 		const url = "http://54.254.44.166:3000/user"
@@ -24,49 +24,54 @@ const AddUser: FC = () => {
 
 		const data = await res.json()
 		alert(data.success ? "Inserted" : "Not inserted")
+		setAddUser(true)
 	}
 	return (
 		<>
-			<PanelTitle title="Add new user">
-				<div className="bg-zinc-50 p-4 shadow-md rounded md:w-2/5">
-					<h1 className="text-2xl">Login form</h1>
-					<hr />
-					{/* Card body */}
-					<div className="mt-3">
-						<TextInput
-							id="code"
-							label="code"
-							type="text"
-							value={code}
-							setValue={setCode}
-						/>
-						<TextInput
-							id="name"
-							label="name"
-							type="text"
-							value={name}
-							setValue={setName}
-						/>
-						<TextInput
-							id="email"
-							label="email"
-							type="email"
-							value={email}
-							setValue={setEmail}
-						/>
-					</div>
+			{!addUser ? (
+				<PanelTitle title="Add new user">
+					<div className="bg-zinc-50 p-4 shadow-md rounded md:w-2/5">
+						<h1 className="text-2xl">Login form</h1>
+						<hr />
+						{/* Card body */}
+						<div className="mt-3">
+							<TextInput
+								id="code"
+								label="code"
+								type="text"
+								value={code}
+								setValue={setCode}
+							/>
+							<TextInput
+								id="name"
+								label="name"
+								type="text"
+								value={name}
+								setValue={setName}
+							/>
+							<TextInput
+								id="email"
+								label="email"
+								type="email"
+								value={email}
+								setValue={setEmail}
+							/>
+						</div>
 
-					<div className="mt-3">
-						<Button label="Submit" onClick={SubmitAddUser} />
-						<NavLink
-							to="/user"
-							className="px-2 py-3 ml-2 hover:text-indigo-500 rounded-lg"
-						>
-							Cancel
-						</NavLink>
+						<div className="mt-3">
+							<Button label="Submit" onClick={SubmitAddUser} />
+							<NavLink
+								to="/user"
+								className="px-2 py-3 ml-2 hover:text-indigo-500 rounded-lg"
+							>
+								Cancel
+							</NavLink>
+						</div>
 					</div>
-				</div>
-			</PanelTitle>
+				</PanelTitle>
+			) : (
+				<Navigate to="/user" />
+			)}
 		</>
 	)
 }
