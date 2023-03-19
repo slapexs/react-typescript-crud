@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react"
 import { PanelTitle, Button, TextInput } from "../component/aui"
-import { Navigate, NavLink, useParams, useNavigation } from "react-router-dom"
+import { Navigate, NavLink, useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RootState } from "../app/store"
 
@@ -12,13 +12,13 @@ const AddUser: FC = () => {
 
 	// Edit section
 	const { uid } = useParams()
+	const { token } = useSelector((state: RootState) => state.auth)
+	const navigate = useNavigate()
 
 	const SubmitAddUser = async () => {
-		const url = "http://54.254.44.166:3000/user"
-		const token =
-			"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsIm5hbWUiOiJhQGEuY29tIn0.eIdaMkVzp-KVr9B14A2frSrFBdI_bv6q95iKgTSRIao"
+		const url = "http://54.254.44.166:3000/user" + (uid ? `/${uid}` : "")
 		const res = await fetch(url, {
-			method: "POST",
+			method: !uid ? "POST" : "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
@@ -27,12 +27,16 @@ const AddUser: FC = () => {
 		})
 
 		const data = await res.json()
-		alert(data.success ? "Inserted" : "Not inserted")
+		if (uid) {
+			alert(data.success ? "Updated" : "Not Updated")
+		} else {
+			alert(data.success ? "Inserted" : "Not inserted")
+		}
+		navigate("/user")
 		setAddUser(true)
 	}
 
 	// Load user data for edit
-	const { token } = useSelector((state: RootState) => state.auth)
 	const loadUserByID = async (uid: string) => {
 		const url = `http://54.254.44.166:3000/user/by-id/${uid}`
 		const res = await fetch(url, {
@@ -83,7 +87,7 @@ const AddUser: FC = () => {
 						</div>
 
 						<div className="mt-3">
-							<Button label="Submit" onClick={SubmitAddUser} />
+							<Button label={!uid ? "Add" : "Update"} onClick={SubmitAddUser} />
 							<NavLink
 								to="/user"
 								className="px-2 py-3 ml-2 hover:text-indigo-500 rounded-lg"
