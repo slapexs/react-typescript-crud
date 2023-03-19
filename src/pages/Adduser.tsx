@@ -1,21 +1,29 @@
 import { FC, useState } from "react"
+import { NavLink } from "react-router-dom"
 import { PanelTitle, Button, TextInput } from "../component/aui"
+import { useDispatch } from "react-redux"
 
 const AddUser: FC = () => {
+	const [code, setCode] = useState("")
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState("")
+	const dispatch = useDispatch()
 
 	const SubmitAddUser = async () => {
-		const url = ""
+		const url = "http://54.254.44.166:3000/user"
+		const token =
+			"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsIm5hbWUiOiJhQGEuY29tIn0.eIdaMkVzp-KVr9B14A2frSrFBdI_bv6q95iKgTSRIao"
 		const res = await fetch(url, {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ name: name, password: password, email: email }),
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({ name: name, code: code, email: email }),
 		})
 
 		const data = await res.json()
-		console.log(data)
+		alert(data.success ? "Inserted" : "Not inserted")
 	}
 	return (
 		<>
@@ -25,6 +33,13 @@ const AddUser: FC = () => {
 					<hr />
 					{/* Card body */}
 					<div className="mt-3">
+						<TextInput
+							id="code"
+							label="code"
+							type="text"
+							value={code}
+							setValue={setCode}
+						/>
 						<TextInput
 							id="name"
 							label="name"
@@ -39,17 +54,16 @@ const AddUser: FC = () => {
 							value={email}
 							setValue={setEmail}
 						/>
-						<TextInput
-							id="password"
-							label="password"
-							type="password"
-							value={password}
-							setValue={setPassword}
-						/>
 					</div>
 
 					<div className="mt-3">
 						<Button label="Submit" onClick={SubmitAddUser} />
+						<NavLink
+							to="/user"
+							className="px-2 py-3 ml-2 hover:text-indigo-500 rounded-lg"
+						>
+							Cancel
+						</NavLink>
 					</div>
 				</div>
 			</PanelTitle>
