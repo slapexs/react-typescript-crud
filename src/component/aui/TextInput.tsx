@@ -9,8 +9,6 @@ interface SettingInput {
 }
 
 const TextInput: FC<SettingInput> = ({ id, type, label, value, setValue }) => {
-	console.log(id)
-
 	return (
 		<>
 			<div className="my-2">
@@ -24,6 +22,7 @@ const TextInput: FC<SettingInput> = ({ id, type, label, value, setValue }) => {
 					onChange={(e) => setValue(e.target.value)}
 					className="p-2 w-full border-2 border-indigo-100 rounded"
 					autoComplete="off"
+					value={value}
 				/>
 			</div>
 		</>

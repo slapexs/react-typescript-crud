@@ -40,6 +40,10 @@ const router = createBrowserRouter([
 				path: "adduser",
 				element: <AddUser />,
 			},
+			{
+				path: "/adduser/:uid",
+				element: <AddUser />,
+			},
 		],
 	},
 	{

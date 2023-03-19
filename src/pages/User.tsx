@@ -1,8 +1,10 @@
-import { FC, useState } from "react"
+import { FC, useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../app/store"
 import { Button, PanelTitle } from "../component/aui"
-import { Navigate, NavLink } from "react-router-dom"
+import { useNavigate, Navigate, NavLink } from "react-router-dom"
+
+import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 
 interface UserModel {
 	id: number
@@ -27,6 +29,8 @@ const Col: FC<ColProps> = ({ values }) => {
 const User: FC = () => {
 	const [user, setUser] = useState<UserResp>({ success: false, data: [] })
 	const { isLogedIn, token } = useSelector((state: RootState) => state.auth)
+	const navigate = useNavigate()
+
 	const getusers = async () => {
 		const res = await fetch("http://54.254.44.166:3000/user", {
 			headers: { Authorization: `Bearer ${token}` },
@@ -49,6 +53,14 @@ const User: FC = () => {
 		})
 		alert("Deleted")
 		getusers()
+	}
+
+	useEffect(() => {
+		getusers()
+	}, [])
+
+	const routeEdituser = (uid: number) => {
+		navigate(`/adduser/${uid}`)
 	}
 
 	return (
@@ -79,13 +91,23 @@ const User: FC = () => {
 									<Col values={elem.code} />
 									<Col values={elem.name} />
 									<Col values={elem.email} />
-									<td className="text-center">
+									<td className="text-center flex">
 										<button
-											className="hover:bg-red-400 text-red-500 my-2 hover:text-white border-2 border-red-300 rounded px-2 py-1"
+											className="mr-2 hover:bg-yellow-500 bg-yellow-400 flex items-center my-2  border-2 border-yellow-300 rounded px-2 py-1"
+											onClick={() => {
+												routeEdituser(elem.id)
+											}}
+										>
+											<PencilSquareIcon width={14} />
+											Edit
+										</button>
+										<button
+											className="hover:bg-red-400 flex items-center text-red-500 my-2 hover:text-white border-2 border-red-300 rounded px-2 py-1"
 											onClick={() => {
 												DeleteUser(elem.id)
 											}}
 										>
+											<TrashIcon width={14} />
 											Delete
 										</button>
 									</td>

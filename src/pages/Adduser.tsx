@@ -1,13 +1,17 @@
-import { FC, useState } from "react"
-import { Navigate, NavLink } from "react-router-dom"
+import { FC, useState, useEffect } from "react"
 import { PanelTitle, Button, TextInput } from "../component/aui"
-import { useNavigation } from "react-router-dom"
+import { Navigate, NavLink, useParams, useNavigation } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { RootState } from "../app/store"
 
 const AddUser: FC = () => {
 	const [code, setCode] = useState("")
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
 	const [addUser, setAddUser] = useState(false)
+
+	// Edit section
+	const { uid } = useParams()
 
 	const SubmitAddUser = async () => {
 		const url = "http://54.254.44.166:3000/user"
@@ -26,6 +30,26 @@ const AddUser: FC = () => {
 		alert(data.success ? "Inserted" : "Not inserted")
 		setAddUser(true)
 	}
+
+	// Load user data for edit
+	const { token } = useSelector((state: RootState) => state.auth)
+	const loadUserByID = async (uid: string) => {
+		const url = `http://54.254.44.166:3000/user/by-id/${uid}`
+		const res = await fetch(url, {
+			method: "GET",
+			headers: { Authorization: `Bearer ${token}` },
+		})
+		const data = await res.json()
+		setCode(data.data.code)
+		setName(data.data.name)
+		setEmail(data.data.email)
+	}
+
+	useEffect(() => {
+		if (uid) {
+			loadUserByID(uid)
+		}
+	}, [])
 	return (
 		<>
 			{!addUser ? (
